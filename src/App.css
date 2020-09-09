@@ -6,8 +6,28 @@ body {
   text-align: center;
 }
 
+.App-logo {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
 h1 {
   font-family: "Bigelow Rules";
   font-size: 72px;
   color: #0ccac4;
+}
+
+.profile-user {
+  padding: 16px 20px;
+  background-color: #0ccac4;
+  height: 250px;
+  width: 200px;
+  border-radius: 8px;
+  margin: auto;
+}
+
+.detail-repos {
+  display: flex;
+  flex-direction: row;
 }

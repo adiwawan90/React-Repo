@@ -21,6 +21,16 @@ function App() {
           Learn React
         </a>
       </header>
+      <div className="profile-user">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>Adi Setyawan</p>
+        <p>email@mail.com</p>
+        <div className="detail-repos">
+          <p>Public Repo</p>
+          <p>folower</p>
+          <p>following</p>
+        </div>
+      </div>
     </div>
   );
 }
