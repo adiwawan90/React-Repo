@@ -1,36 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { SearchBox } from './components';
+import React, {useState} from 'react';
+import './App.scss';
+import { SearchBox, Button, UserCard } from './components';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [datas, setDatas] = useState('')
+  console.log(name)
+
+  
+  const getUser = () => {
+    setIsLoading(true);
+    
+    setTimeout( () => {
+      fetch(`https://api.github.com/users/${name}`)
+      .then(response => response.json())
+      .then(data => {
+      console.log("ini data", data)
+
+        setDatas(data);
+      })
+    },1000)
+  }
+
+
+
+  console.log("ini datas", datas)
+
   return (
     <div className="App">
-      <SearchBox placeholder="Search Repo" />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <div className="profile-user">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Adi Setyawan</p>
-        <p>email@mail.com</p>
-        <div className="detail-repos">
-          <p>Public Repo</p>
-          <p>folower</p>
-          <p>following</p>
-        </div>
-      </div>
+      <SearchBox placeholder="Search Repo" handleChange={(e) => setName(e.target.value)} />
+      <Button title="Search" onClick={() => getUser()} />
+      
+      <UserCard 
+        avatar={datas.avatar_url} 
+        name={datas.name}
+        email={datas.email}
+        repos={datas.public_repos}
+        followers={datas.followers}
+        following={datas.following}
+      />
     </div>
   );
 }

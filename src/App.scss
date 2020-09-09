@@ -6,12 +6,6 @@ body {
   text-align: center;
 }
 
-.App-logo {
-  height: 50px;
-  width: 50px;
-  border-radius: 25px;
-}
-
 h1 {
   font-family: "Bigelow Rules";
   font-size: 72px;
@@ -25,9 +19,16 @@ h1 {
   width: 200px;
   border-radius: 8px;
   margin: auto;
-}
 
-.detail-repos {
-  display: flex;
-  flex-direction: row;
+  .avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+  }
+
+  .detail-repos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 }
