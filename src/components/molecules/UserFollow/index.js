@@ -7,10 +7,9 @@ const  UserReposList = ({data}) => {
 				{data.map(({ id, full_name, stargazers_count, html_url }) => (
 						
 					<li key={id} className='repos-list'>
-						<div className='user-repos-stars'>
 						<h3><a className='user-repos-name' href={html_url}>{full_name}</a></h3>
-							<i class="fas fa-star"></i>
-							{stargazers_count}
+						<div className='user-repos-stars'>
+							
 						</div>
 					</li>
 						
@@ -37,7 +36,13 @@ const UserFollowList = ({data}) => {
 const UserFollow = ({data, type}) => {
 
     if (type === 'repo') {
-			return <UserReposList data={data} />
+			return (
+				<div className='user-data-grid'>
+					<div className="data-wrapper">
+						<UserReposList data={data} />
+					</div>
+				</div>
+			)
     }
     return (
 			<div className='user-data-grid'>

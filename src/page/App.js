@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import './App.scss';
-import { SearchBox, Button, UserCard, UserDataList, UserFollow } from './components';
+import { SearchBox, Button, UserCard, UserDataList, UserFollow } from '../components';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
-  const [datas, setDatas] = useState([])
+  const [datas, setDatas] = useState(null)
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
   const [repos, setRepos] = useState([])
@@ -80,17 +80,20 @@ function App() {
       <SearchBox placeholder="Search Repo" handleChange={(e) => setName(e.target.value)} />
       <Button title="Search" onClick={() => getUser()} />
       
-      <UserCard 
-        avatar={datas.avatar_url} 
-        name={datas.name}
-        email={datas.email}
-        repos={datas.public_repos}
-        followers={datas.followers}
-        following={datas.following}
-        getRepos={getRepos}
-        getFollowers={getFollowers}
-        getFollowing={getFollowing}
-      />
+      {datas &&
+        <UserCard 
+          avatar={datas.avatar_url} 
+          name={datas.name}
+          email={datas.email}
+          repos={datas.public_repos}
+          followers={datas.followers}
+          following={datas.following}
+          getRepos={getRepos}
+          getFollowers={getFollowers}
+          getFollowing={getFollowing}
+        />
+        
+      }
 
       <UserFollow data={followers} />
       <UserFollow data={following} />
