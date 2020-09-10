@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.scss';
-import { SearchBox, Button, UserCard, UserDataList, UserFollow } from '../components';
+import { SearchBox, Button, UserCard, UserFollow, Loading } from '../components';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,17 +9,19 @@ function App() {
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
   const [repos, setRepos] = useState([])
-
-  console.log(name)
-
   
   const getUser = () => {
+    setFollowers([]);
+    setFollowing([]);
+    setRepos([]);
+
     setIsLoading(true);
+     
     
     fetch(`https://api.github.com/users/${name}`)
     .then(response => response.json())
     .then(data => {
-    console.log("ini data", data)
+      setIsLoading(false);
 
       setDatas(data);
     })
@@ -32,7 +34,7 @@ function App() {
     fetch(`https://api.github.com/users/${name}/followers`)
     .then(response => response.json())
     .then(data => {
-    console.log("ini data", data)
+      setIsLoading(false);
 
       setFollowers(data);
       setFollowing([]);
@@ -47,7 +49,7 @@ function App() {
     fetch(`https://api.github.com/users/${name}/repos`)
     .then(response => response.json())
     .then(data => {
-    console.log("ini data", data)
+      setIsLoading(false);
 
       setRepos(data);
       setFollowers([]);
@@ -61,7 +63,7 @@ function App() {
     fetch(`https://api.github.com/users/${name}/following`)
     .then(response => response.json())
     .then(data => {
-    console.log("ini data", data)
+      setIsLoading(false);
 
       setFollowing(data);
       setFollowers([]);
@@ -70,18 +72,12 @@ function App() {
     
   }
 
-
-
-  console.log("ini datas", datas)
-
-  return (
-    <div className="App">
-      <h1>Github Repos</h1>
-      <SearchBox placeholder="Search Repo" handleChange={(e) => setName(e.target.value)} />
-      <Button title="Search" onClick={() => getUser()} />
-      
-      {datas &&
-        <UserCard 
+  const MyComponent = ()=> {
+    if (datas !== null) {
+      if (datas.message !== undefined ) {
+        return <h2>Repository Not Found</h2>
+      } else {
+        return <UserCard 
           avatar={datas.avatar_url} 
           name={datas.name}
           email={datas.email}
@@ -92,8 +88,21 @@ function App() {
           getFollowers={getFollowers}
           getFollowing={getFollowing}
         />
-        
       }
+    }
+    return null
+  }
+
+
+  return (
+    <div className="App">
+      <h1>Github Repos</h1>
+      <SearchBox placeholder="Search Repo" handleChange={(e) => setName(e.target.value)} />
+      <Button title="Search" onClick={() => getUser()} />
+      
+      {isLoading && <Loading /> }
+      
+      <MyComponent />
 
       <UserFollow data={followers} />
       <UserFollow data={following} />
