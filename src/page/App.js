@@ -100,7 +100,11 @@ function App() {
       <SearchBox placeholder="Search Repo" handleChange={(e) => setName(e.target.value)} />
       <Button title="Search" onClick={() => getUser()} />
       
-      {isLoading && <Loading /> }
+      {isLoading && (
+        <div className="user-data-loading">
+          <Loading />
+        </div>
+      )}
       
       <MyComponent />
 
